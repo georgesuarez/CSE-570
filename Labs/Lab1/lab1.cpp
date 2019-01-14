@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 
 #define ACCEPTING_STATE 3
 #define STATES 4
@@ -8,29 +7,26 @@
 
 typedef int State;
 
-enum Alphabet
-{
-    a,
-    b
-};
+// Transition table for DFA1: L = (a|b)* abb
+static int transitionTable1[STATES][SYMBOLS] = {{1, 0}, {1, 2}, {1, 3}, {1, 0}};
 
-static int transitionTable[STATES][SYMBOLS] = {
-    {1, 0},
-    {1, 2},
-    {1, 3},
-    {1, 0}};
+// Transition table for DFA2: L = (a|b)* bba
+static int transitionTable2[STATES][SYMBOLS] = {{0, 1}, {0, 2}, {3, 2}, {0, 1}};
 
+// Initial starting state for both DF1 and DF2
 State getInitialState()
 {
     return 0;
 }
 
-bool isFinalState(State s)
+// Returns true if the final state is in accepting state
+bool isFinalState(State state)
 {
-    return (s == ACCEPTING_STATE) ? true : false;
+    return (state == ACCEPTING_STATE) ? true : false;
 }
 
-State getTransition(State s, char input)
+// Determines what state to transition to given an input
+int getTransition(char input)
 {
     // Not in the language
     if (input != 'a' && input != 'b')
@@ -38,78 +34,75 @@ State getTransition(State s, char input)
         return -1;
     }
 
-    // Determine what state to return depending on the current state
-    switch (s)
+    switch (input)
     {
-    case 0:
-        if (input == 'a')
-            return transitionTable[s][0];
-        else if (input == 'b')
-            return transitionTable[s][1];
-        break;
-    case 1:
-        if (input == 'a')
-            return transitionTable[s][0];
-        else if (input == 'b')
-            return transitionTable[s][1];
-        break;
-    case 2:
-        if (input == 'a')
-            return transitionTable[s][0];
-        else if (input == 'b')
-            return transitionTable[s][1];
-        break;
-    case 3:
-        if (input == 'a')
-            return transitionTable[s][0];
-        else if (input == 'b')
-            return transitionTable[s][1];
-        break;
-    default:
+    case 'a':
         return 0;
         break;
+    case 'b':
+        return 1;
+        break;
+    default:
+        return -1;
+        break;
     }
-
-    return -1;
 }
 
 int main()
 {
+    std::string language1 = "(a|b)* abb";
+    std::string language2 = "(a|b)* bba";
 
     std::string testString, currentString;
     std::cout << "Enter a string: ";
     std::getline(std::cin, testString);
 
+    if (testString.empty() || testString.length() < 3)
+    {
+        std::cerr << "Not a valid string" << '\n';
+        return EXIT_FAILURE;
+    }
+
     std::cout << '\n';
 
-    State state = getInitialState();
+    State state1 = getInitialState();
+    State state2 = getInitialState();
 
     for (int i = 0; i < testString.length(); i++)
     {
-        if (testString.empty() || testString.length() < 3)
-        {
-            std::cerr << "Not a valid string" << '\n';
-            return EXIT_FAILURE;
-        }
-
         char input = testString[i];
 
         currentString += input;
 
-        state = getTransition(state, input);
+        int transition = getTransition(input);
 
-        std::cout << "Checking string: " << currentString << '\n';
-        std::cout << "In state: " << state << "\n\n";
+        state1 = transitionTable1[state1][transition];
+        state2 = transitionTable2[state2][transition];
     }
 
-    if (isFinalState(state))
+    if (isFinalState(state1) && isFinalState(state2))
     {
-        std::cout << "\033[32mACCEPTED\033" << '\n';
+        std::cout << "\033[32mACCEPTED in both languages at position: " << currentString << '\n';
+    }
+    else if (!isFinalState(state1) && isFinalState(state2))
+    {
+        std::cout << "\033[32m"
+                  << "ACCEPTED for the language: " << language2 << '\n';
+        std::cout << "\033[31m"
+                  << "REJECTED for the language: " << language1 << '\n';
+        std::cout << "Position of the string: " << currentString << '\n';
+    }
+    else if (isFinalState(state1) && !isFinalState(state2))
+    {
+        std::cout << "\033[32mACCEPTED for the language: " << language1 << '\n';
+        std::cout << "\033[31mREJECTED for the language: " << language2 << '\n';
+        std::cout << "Position of the string: " << currentString << '\n';
     }
     else
     {
-        std::cout << "\033[31mREJECTED\033" << '\n';
+        std::cout << "\033[31mREJECTED for both languages" << '\n';
+        std::cout << "Position of the string: " << currentString << '\n';
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
