@@ -10,7 +10,7 @@ by a symbol of some alphabet. DFAs are typically given in one of two formats:
 Both representations are equivalant to each other.
 
 ## Exercise:
-Write the program simulates the DFA in the book (pg. 141) in the language of your choice, but limited to something could run on the machines in the lab.
+Write a program simulates the DFA in the book (pg. 141) in the language of your choice, but limited to something could run on the machines in the lab.
 
 _Accepts L = (a|b)* abb_
 
