@@ -17,8 +17,9 @@ _Accepts L = (a|b)* abb_
 The input to the DFA should be a string; in the course of processing this string character-by-character, the DFA will undergo the specified state transitions. The DFA accepts the string if it is in an accepting state when it has consumed its' input; otherwise it rejects the string.
 
 ## Deliverables:
->Program source code, with internal documentation
->Test results : use strings that are in L, and strings not in L
+Program source code, with internal documentation
+
+Test results : use strings that are in L, and strings not in L
 
 
 
