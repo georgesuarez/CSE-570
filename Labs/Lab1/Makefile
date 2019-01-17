@@ -1,4 +1,4 @@
-CXX = g++
+CXX = g++ -g -Wall
 
 PROGS = lab1.o
 
@@ -9,4 +9,4 @@ lab1.o: lab1.cpp
 	$(CXX) -c lab1.cpp
 
 clean:
-	rm -f *.o $(PROGS)
+	rm -f lab1 $(PROGS)
