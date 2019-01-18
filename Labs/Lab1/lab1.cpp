@@ -139,14 +139,12 @@ int main()
             validPositionsForDFA1.push_back(make_pair(startingPosForDFA1, endPosForDFA1));
             acceptedStringsDFA1.push_back(currentString);
             state1 = getInitialState();
-            // currentString.clear();
         }
         else if (isFinalState(state2))
         {
             validPositionsForDFA2.push_back(make_pair(startingPosForDFA2, endPosForDFA2));
             acceptedStringsDFA2.push_back(currentString);
             state2 = getInitialState();
-            // currentString.clear();
         }
     }
 
