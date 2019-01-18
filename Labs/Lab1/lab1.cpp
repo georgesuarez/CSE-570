@@ -66,6 +66,8 @@ int main()
     cout << "Enter a string: ";
     getline(cin, testString);
 
+    // testString = "abbabbabbabbbbabbabbaabb";
+
     if (testString.empty() || testString.length() < 3)
     {
         cerr << "Not a valid string" << '\n';
@@ -78,8 +80,10 @@ int main()
     State state2 = getInitialState();
 
     int startingPosForDFA1 = 0, startingPosForDFA2 = 0;
-    int currentPosForDFA1, currentPosForDFA2;
-    int endPosForDFA1, endPosForDFA2;
+    int currentPosForDFA1;
+    int currentPosForDFA2;
+    int endPosForDFA1;
+    int endPosForDFA2;
 
     for (int i = 0; i < testString.length(); i++)
     {
@@ -89,7 +93,6 @@ int main()
 
         if (transition == -1)
         {
-            //currentString.clear();
             state1 = 0;
             state2 = 0;
             startingPosForDFA1 = i + 1;
@@ -136,28 +139,29 @@ int main()
             validPositionsForDFA1.push_back(make_pair(startingPosForDFA1, endPosForDFA1));
             acceptedStringsDFA1.push_back(currentString);
             state1 = getInitialState();
-            currentString.clear();
+            // currentString.clear();
         }
         else if (isFinalState(state2))
         {
             validPositionsForDFA2.push_back(make_pair(startingPosForDFA2, endPosForDFA2));
             acceptedStringsDFA2.push_back(currentString);
             state2 = getInitialState();
-            currentString.clear();
+            // currentString.clear();
         }
     }
 
+
     if (acceptedStringsDFA1.empty() && acceptedStringsDFA2.empty())
     {
-        cout << "REJECTED for both languages" << '\n';
+        cout << "\033[31mREJECTED for both languages" << '\n';
         return EXIT_FAILURE;
     }
 
     vector<pair<int, int> >::iterator it;
 
-    if (!validPositionsForDFA1.empty())
+    if (!validPositionsForDFA1.empty() && !acceptedStringsDFA1.empty())
     {
-        cout << "Valid positions for the language: " << language1 << " are in: " << '\n';
+        cout << "\033[32mValid position(s) for the language: " << language1 << " are in: " << '\n';
         for (it = validPositionsForDFA1.begin(); it != validPositionsForDFA1.end(); ++it)
         {
             pair<int, int> tmp = *it;
@@ -165,14 +169,10 @@ int main()
         }
         cout << "\n\n";
     }
-    else
-    {
-        cout << "No Valid Positions for the language: " << language1 << " are found." << '\n';
-    }
 
-    if (!validPositionsForDFA2.empty())
+    if (!validPositionsForDFA2.empty() && !acceptedStringsDFA2.empty())
     {
-        cout << "Valid positions for the language: " << language2 << " are in: " << '\n';
+        cout << "\033[32mValid positions for the language: " << language2 << " are in: " << '\n';
         for (it = validPositionsForDFA2.begin(); it != validPositionsForDFA2.end(); ++it)
         {
             pair<int, int> tmp = *it;
@@ -180,14 +180,10 @@ int main()
         }
         cout << "\n\n";
     }
-    else
-    {
-        cout << "No Valid Positions for the language: " << language2 << " are found." << '\n';
-    }
 
     if (!acceptedStringsDFA1.empty())
     {
-        cout << "ACCEPTED strings for " << language1 << ":" << '\n';
+        cout << "\033[32mACCEPTED string(s) for " << language1 << ":" << '\n';
         for (int i = 0; i < acceptedStringsDFA1.size(); i++)
         {
             cout << acceptedStringsDFA1[i] << ' ';
@@ -196,12 +192,12 @@ int main()
     }
     else
     {
-        cout << "No valid string was accepted in the language: " << language1 << '\n';
+        cout << "\033[31mNo valid string(s) was accepted in the language: " << language1 << '\n';
     }
 
     if (!acceptedStringsDFA2.empty())
     {
-        cout << "ACCEPTED strings for " << language2 << ":" << '\n';
+        cout << "\033[32mACCEPTED string(s) for " << language2 << ":" << '\n';
         for (int i = 0; i < acceptedStringsDFA2.size(); i++)
         {
             cout << acceptedStringsDFA2[i] << ' ';
@@ -210,7 +206,7 @@ int main()
     }
     else
     {
-        cout << "No valid string was accpeted in the language: " << language2 << '\n';
+        cout << "\033[31mNo valid string(s) was accepted in the language: " << language2 << '\n';
     }
 
     return 0;
