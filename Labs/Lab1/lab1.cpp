@@ -68,8 +68,8 @@ int main()
     vector<string> acceptedStringsDFA1;
     vector<string> acceptedStringsDFA2;
 
-    vector<pair<int, int> > validPositionsForDFA1;
-    vector<pair<int, int> > validPositionsForDFA2;
+    vector<pair<int, int>> validPositionsForDFA1;
+    vector<pair<int, int>> validPositionsForDFA2;
 
     getline(cin, testString);
 
@@ -92,7 +92,7 @@ int main()
     int endPosForDFA1 = 0;
     int endPosForDFA2 = 0;
 
-    for (int i = 0; i < testString.length(); i++)
+    for (size_t i = 0; i < testString.length(); i++)
     {
         char input = testString[i];
 
@@ -155,7 +155,6 @@ int main()
         }
     }
 
-
     if (acceptedStringsDFA1.empty() && acceptedStringsDFA2.empty())
     {
         cout << "\033[31mREJECTED for both languages" << '\n';
@@ -189,7 +188,7 @@ int main()
     if (!acceptedStringsDFA1.empty())
     {
         cout << "\033[32mACCEPTED string(s) for " << language1 << ":" << '\n';
-        for (int i = 0; i < acceptedStringsDFA1.size(); i++)
+        for (size_t i = 0; i < acceptedStringsDFA1.size(); i++)
         {
             cout << acceptedStringsDFA1[i] << ' ';
         }
@@ -203,7 +202,7 @@ int main()
     if (!acceptedStringsDFA2.empty())
     {
         cout << "\033[32mACCEPTED string(s) for " << language2 << ":" << '\n';
-        for (int i = 0; i < acceptedStringsDFA2.size(); i++)
+        for (size_t i = 0; i < acceptedStringsDFA2.size(); i++)
         {
             cout << acceptedStringsDFA2[i] << ' ';
         }
