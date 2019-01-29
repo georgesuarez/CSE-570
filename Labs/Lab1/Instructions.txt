@@ -1,0 +1,9 @@
+To run the program type in:
+
+    make lab1
+
+and then do
+
+    ./lab1
+
+to execute the program

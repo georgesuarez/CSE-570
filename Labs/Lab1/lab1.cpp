@@ -1,3 +1,10 @@
+/*
+ * Name: George Suarez
+ * Lab: 1
+ * Class: CSE 570 Compilers
+ * Term: Winter 2019
+ * Instructor: Ernesto Gomez
+**/
 #include <iostream>
 #include <string>
 #include <vector>
@@ -22,13 +29,14 @@ State getInitialState()
     return 0;
 }
 
-// Returns true if the final state is in accepting state
+// Checks if a given state is in its' accepting state
+// Returns a true if state == 3, otherwise false
 bool isFinalState(State state)
 {
     return (state == ACCEPTING_STATE) ? true : false;
 }
 
-// Determines what state to transition to given an input
+// Determines what the transition code is given an character as input
 int getTransition(char input)
 {
     if (input != 'a' && input != 'b')
@@ -63,10 +71,7 @@ int main()
     vector<pair<int, int> > validPositionsForDFA1;
     vector<pair<int, int> > validPositionsForDFA2;
 
-    cout << "Enter a string: ";
     getline(cin, testString);
-
-    // testString = "abbabbabbabbbbabbabbaabb";
 
     if (testString.empty() || testString.length() < 3)
     {
@@ -76,14 +81,16 @@ int main()
 
     cout << '\n';
 
+    cout << "The input string entered: " << testString << '\n';
+
     State state1 = getInitialState();
     State state2 = getInitialState();
 
     int startingPosForDFA1 = 0, startingPosForDFA2 = 0;
-    int currentPosForDFA1;
-    int currentPosForDFA2;
-    int endPosForDFA1;
-    int endPosForDFA2;
+    int currentPosForDFA1 = 0;
+    int currentPosForDFA2 = 0;
+    int endPosForDFA1 = 0;
+    int endPosForDFA2 = 0;
 
     for (int i = 0; i < testString.length(); i++)
     {
