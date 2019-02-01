@@ -54,9 +54,9 @@ void Parser::parse()
     // since we just want the productions
     productions.erase(productions.find("$"));
 
-    for (auto p = productions.begin(); p != productions.end(); ++p)
+    for (auto p : productions)
     {
-        std::string currProd = *p;
+        std::string currProd = p;
         char nonTerminal = currProd[0];
         nonTerminals.insert(nonTerminal);
 
@@ -83,9 +83,9 @@ void Parser::computeFirst()
         changed = false;
 
         // Go through productions
-        for (auto p = productions.begin(); p != productions.end(); ++p)
+        for (auto p : productions)
         {
-            std::string currProduction = *p;
+            std::string currProduction = p;
             char nonTerminal = currProduction[0];
             std::string rhs = currProduction.substr(3);
 
@@ -98,9 +98,9 @@ void Parser::computeFirst()
                     temp.erase(temp.find(EPLISON));
                     std::set<char> unionSet = util.setUnion(first[nonTerminal], temp);
 
-                    for (auto s = unionSet.begin(); s != unionSet.end(); ++s)
+                    for (auto s : unionSet)
                     {
-                        auto checkInsert = first[nonTerminal].insert(*s);
+                        auto checkInsert = first[nonTerminal].insert(s);
 
                         // Check if a set in FIRST has been changed after inserting
                         // a new nonTerminal key
@@ -116,9 +116,9 @@ void Parser::computeFirst()
                 {
                     std::set<char> unionSet = util.setUnion(first[nonTerminal], temp);
 
-                    for (auto s = unionSet.begin(); s != unionSet.end(); ++s)
+                    for (auto s : unionSet)
                     {
-                        auto checkInsert = first[nonTerminal].insert(*s);
+                        auto checkInsert = first[nonTerminal].insert(s);
 
                         if (checkInsert.second)
                         {
@@ -148,9 +148,9 @@ void Parser::computeFollow()
     do
     {
         changed = false;
-        for (auto p = productions.begin(); p != productions.end(); ++p)
+        for (auto p : productions)
         {
-            std::string currProduction = *p;
+            std::string currProduction = p;
             char nonTerminal = currProduction[0];
             std::string rhs = currProduction.substr(3);
 
@@ -162,19 +162,18 @@ void Parser::computeFollow()
                     if (util.hasEplison(temp))
                     {
                         std::set<char> nonTerminalFollowSet = follow[nonTerminal];
-                        for (auto n = nonTerminalFollowSet.begin(); n != nonTerminalFollowSet.end(); ++n)
+                        for (auto n : nonTerminalFollowSet)
                         {
-                            auto checkInsert = follow[rhs[i]].insert(*n);
+                            auto checkInsert = follow[rhs[i]].insert(n);
                             if (checkInsert.second)
                             {
                                 changed = true;
                             }
                         }
                     }
-                    std::set<char> temp2 = first[rhs[i + 1]];
-                    for (auto t = temp2.begin(); t != temp2.end(); ++t)
+                    for (auto t : temp)
                     {
-                        auto checkInsert = follow[rhs[i]].insert(*t);
+                        auto checkInsert = follow[rhs[i]].insert(t);
                         if (checkInsert.second)
                         {
                             changed = true;
@@ -184,9 +183,9 @@ void Parser::computeFollow()
                 else if (util.isNonTerminal(rhs[i]) && i == rhs.length() - 1)
                 {
                     std::set<char> temp = follow[nonTerminal];
-                    for (auto t = temp.begin(); t != temp.end(); ++t)
+                    for (auto t : temp)
                     {
-                        auto checkInsert = follow[rhs[i]].insert(*t);
+                        auto checkInsert = follow[rhs[i]].insert(t);
                         if (checkInsert.second)
                         {
                             changed = true;
@@ -202,12 +201,12 @@ void Parser::computeFollow()
 void Parser::printFirst() const
 {
     std::cout << "FIRST = " << '\n';
-    for (auto &f : first)
+    for (auto f : first)
     {
-        std::cout << f.first << " -> ";
-        for (auto s = f.second.begin(); s != f.second.end(); ++s)
+        std::cout << "[" << f.first << "] = ";
+        for (auto s : f.second)
         {
-            std::cout << *s << ' ';
+            std::cout << "{ " << s << " }";
         }
         std::cout << '\n';
     }
@@ -216,12 +215,12 @@ void Parser::printFirst() const
 void Parser::printFollow() const
 {
     std::cout << "FOLLOW = " << '\n';
-    for (auto &f : follow)
+    for (auto f : follow)
     {
-        std::cout << f.first << " -> ";
-        for (auto s = f.second.begin(); s != f.second.end(); ++s)
+        std::cout << "[" << f.first << "] = ";
+        for (auto s : f.second)
         {
-            std::cout << *s << ' ';
+            std::cout << "{ " << s << " }";
         }
         std::cout << '\n';
     }

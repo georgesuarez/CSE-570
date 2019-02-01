@@ -1,7 +1,5 @@
-CXXFLAGS += -Wc++11-extensions
-
 grammer: grammer.o Parser.o Utility.o
-		g++ -std=c++1y -pedantic grammer.o Parser.o Utility.o -o grammer
+		g++ -std=c++1y grammer.o Parser.o Utility.o -o grammer
 
 grammer.o: grammer.cpp
 		g++ -c grammer.cpp
