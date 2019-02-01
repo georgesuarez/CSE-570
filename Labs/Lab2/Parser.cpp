@@ -203,10 +203,10 @@ void Parser::printFirst() const
     std::cout << "FIRST = " << '\n';
     for (auto f : first)
     {
-        std::cout << "[" << f.first << "] = ";
+        std::cout << f.first << " -> ";
         for (auto s : f.second)
         {
-            std::cout << "{ " << s << " }";
+            std::cout << s << ' ';
         }
         std::cout << '\n';
     }
@@ -217,10 +217,10 @@ void Parser::printFollow() const
     std::cout << "FOLLOW = " << '\n';
     for (auto f : follow)
     {
-        std::cout << "[" << f.first << "] = ";
+        std::cout << f.first << " -> ";
         for (auto s : f.second)
         {
-            std::cout << "{ " << s << " }";
+            std::cout << s << ' ';
         }
         std::cout << '\n';
     }
