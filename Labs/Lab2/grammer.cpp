@@ -3,7 +3,7 @@
 
 int main()
 {
-    std::string grammer = "g419";
+    std::string grammer = "g417";
 
     Parser *parser = new Parser(grammer);
 
@@ -16,4 +16,6 @@ int main()
     std::cout << '\n';
 
     parser->printFollow();
+
+    delete parser;
 }
