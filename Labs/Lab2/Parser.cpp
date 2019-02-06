@@ -76,6 +76,7 @@ void Parser::parse()
     computeFollow();
 }
 
+// Computes the FIRST set which gets stored into a map
 void Parser::computeFirst()
 {
     do
@@ -143,6 +144,7 @@ void Parser::computeFirst()
     } while (changed);
 }
 
+// Computes the FOLLOW set which gets stored into a map
 void Parser::computeFollow()
 {
     do
