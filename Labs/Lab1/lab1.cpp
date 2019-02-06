@@ -69,6 +69,8 @@ int main()
     std::vector<std::pair<int, int>> validPositionsForDFA1;
     std::vector<std::pair<int, int>> validPositionsForDFA2;
 
+    std::cout << "Enter a string: ";
+
     std::getline(std::cin, testString);
 
     if (testString.empty() || testString.length() < 3)
@@ -79,7 +81,7 @@ int main()
 
     std::cout << '\n';
 
-    std::cout << "The input string entered: " << testString << "\n\n";
+    std::cout << "The string entered: " << testString << "\n\n";
 
     State state1 = getInitialState();
     State state2 = getInitialState();
