@@ -9,8 +9,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 #define ACCEPTING_STATE 3
 #define STATES 4
 #define SYMBOLS 2
@@ -60,28 +58,28 @@ int getTransition(char input)
 
 int main()
 {
-    const string language1 = "(a|b)* abb"; // Language for DFA1
-    const string language2 = "(a|b)* bba"; // Language for DFA2
+    const std::string language1 = "(a|b)* abb"; // Language for DFA1
+    const std::string language2 = "(a|b)* bba"; // Language for DFA2
 
-    string testString, currentString;
+    std::string testString, currentString;
 
-    vector<string> acceptedStringsDFA1;
-    vector<string> acceptedStringsDFA2;
+    std::vector<std::string> acceptedStringsDFA1;
+    std::vector<std::string> acceptedStringsDFA2;
 
-    vector<pair<int, int>> validPositionsForDFA1;
-    vector<pair<int, int>> validPositionsForDFA2;
+    std::vector<std::pair<int, int>> validPositionsForDFA1;
+    std::vector<std::pair<int, int>> validPositionsForDFA2;
 
-    getline(cin, testString);
+    std::getline(std::cin, testString);
 
     if (testString.empty() || testString.length() < 3)
     {
-        cerr << "Not a valid string" << '\n';
+        std::cerr << "Not a valid string" << '\n';
         return EXIT_FAILURE;
     }
 
-    cout << '\n';
+    std::cout << '\n';
 
-    cout << "The input string entered: " << testString << '\n';
+    std::cout << "The input string entered: " << testString << "\n\n";
 
     State state1 = getInitialState();
     State state2 = getInitialState();
@@ -143,13 +141,13 @@ int main()
 
         if (isFinalState(state1))
         {
-            validPositionsForDFA1.push_back(make_pair(startingPosForDFA1, endPosForDFA1));
+            validPositionsForDFA1.push_back(std::make_pair(startingPosForDFA1, endPosForDFA1));
             acceptedStringsDFA1.push_back(currentString);
             state1 = getInitialState();
         }
         else if (isFinalState(state2))
         {
-            validPositionsForDFA2.push_back(make_pair(startingPosForDFA2, endPosForDFA2));
+            validPositionsForDFA2.push_back(std::make_pair(startingPosForDFA2, endPosForDFA2));
             acceptedStringsDFA2.push_back(currentString);
             state2 = getInitialState();
         }
@@ -157,60 +155,60 @@ int main()
 
     if (acceptedStringsDFA1.empty() && acceptedStringsDFA2.empty())
     {
-        cout << "\033[31mREJECTED for both languages" << '\n';
+        std::cout << "\033[31mREJECTED for both languages" << '\n';
         return EXIT_FAILURE;
     }
 
-    vector<pair<int, int> >::iterator it;
-
     if (!validPositionsForDFA1.empty() && !acceptedStringsDFA1.empty())
     {
-        cout << "\033[32mValid position(s) for the language: " << language1 << " are in: " << '\n';
-        for (it = validPositionsForDFA1.begin(); it != validPositionsForDFA1.end(); ++it)
+        std::cout << "\033[32mValid position(s) for the language: " << language1 << " are in: " << '\n';
+        for (auto v : validPositionsForDFA1)
         {
-            pair<int, int> tmp = *it;
-            cout << tmp.first << '-' << tmp.second << '\n';
+            std::cout << v.first << '-' << v.second << '\n';
         }
-        cout << "\n\n";
+
+        std::cout << "\n\n";
     }
 
     if (!validPositionsForDFA2.empty() && !acceptedStringsDFA2.empty())
     {
-        cout << "\033[32mValid positions for the language: " << language2 << " are in: " << '\n';
-        for (it = validPositionsForDFA2.begin(); it != validPositionsForDFA2.end(); ++it)
+        std::cout << "\033[32mValid positions for the language: " << language2 << " are in: " << '\n';
+
+        for (auto v : validPositionsForDFA2)
         {
-            pair<int, int> tmp = *it;
-            cout << tmp.first << '-' << tmp.second << '\n';
+            std::cout << v.first << '-' << v.second << '\n';
         }
-        cout << "\n\n";
+
+        std::cout << "\n\n";
     }
 
     if (!acceptedStringsDFA1.empty())
     {
-        cout << "\033[32mACCEPTED string(s) for " << language1 << ":" << '\n';
-        for (size_t i = 0; i < acceptedStringsDFA1.size(); i++)
+        std::cout << "\033[32mACCEPTED string(s) for " << language1 << ":" << '\n';
+
+        for (auto a : acceptedStringsDFA1)
         {
-            cout << acceptedStringsDFA1[i] << ' ';
+            std::cout << a << ' ';
         }
-        cout << "\n\n";
+        std::cout << "\n\n";
     }
     else
     {
-        cout << "\033[31mNo valid string(s) was accepted in the language: " << language1 << '\n';
+        std::cout << "\033[31mNo valid string(s) was accepted in the language: " << language1 << '\n';
     }
 
     if (!acceptedStringsDFA2.empty())
     {
-        cout << "\033[32mACCEPTED string(s) for " << language2 << ":" << '\n';
-        for (size_t i = 0; i < acceptedStringsDFA2.size(); i++)
+        std::cout << "\033[32mACCEPTED string(s) for " << language2 << ":" << '\n';
+        for (auto a : acceptedStringsDFA2)
         {
-            cout << acceptedStringsDFA2[i] << ' ';
+            std::cout << a << ' ';
         }
-        cout << "\n\n";
+        std::cout << "\n\n";
     }
     else
     {
-        cout << "\033[31mNo valid string(s) was accepted in the language: " << language2 << '\n';
+        std::cout << "\033[31mNo valid string(s) was accepted in the language: " << language2 << '\n';
     }
 
     return 0;
