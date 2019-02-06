@@ -1,3 +1,9 @@
+/*
+ * Name: George Suarez
+ * Class: CSE 570 Compilers
+ * Instructor: Dr. Ernesto Gomez
+ * Term: Winter 2019
+**/
 #include "Parser.h"
 #include <iostream>
 

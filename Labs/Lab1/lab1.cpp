@@ -2,8 +2,8 @@
  * Name: George Suarez
  * Lab: 1
  * Class: CSE 570 Compilers
+ * Instructor: Dr. Ernesto Gomez
  * Term: Winter 2019
- * Instructor: Ernesto Gomez
 **/
 #include <iostream>
 #include <string>
