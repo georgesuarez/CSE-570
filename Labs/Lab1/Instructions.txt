@@ -6,4 +6,6 @@ and then do
 
     ./lab1
 
-to execute the program
+to execute the program and will prompt the user
+to enter a string that either be accepted by either
+DFAs.
