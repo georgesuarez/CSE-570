@@ -76,14 +76,15 @@ void Parser::parse()
     computeFollow();
 }
 
-// Computes the FIRST set which gets stored into a map
+// Computes the FIRST set following the algorithm
+// given in the CSE 570/670 website
 void Parser::computeFirst()
 {
     do
     {
         changed = false;
 
-        // Go through productions
+        // Go through the productions
         for (auto p : productions)
         {
             std::string currProduction = p;
@@ -92,8 +93,11 @@ void Parser::computeFirst()
 
             for (size_t i = 0; i < rhs.length();)
             {
+                // Retrieve a set from FIRST(X)
                 std::set<char> temp = first[rhs[i]];
 
+                // Add everything in FIRST(Y_i) except for ε and
+                // increment i
                 if (util.hasEplison(temp))
                 {
                     temp.erase(temp.find(EPLISON));
@@ -113,6 +117,7 @@ void Parser::computeFirst()
 
                     i++;
                 }
+                // Else FIRST(X) = {X}
                 else
                 {
                     std::set<char> unionSet = util.setUnion(first[nonTerminal], temp);
@@ -128,7 +133,7 @@ void Parser::computeFirst()
                     }
                     break;
                 }
-                // i > k
+                // If i > k then add ε to FIRST(X)
                 if (i >= rhs.length())
                 {
                     auto checkInsert = first[nonTerminal].insert(EPLISON);
@@ -144,25 +149,38 @@ void Parser::computeFirst()
     } while (changed);
 }
 
-// Computes the FOLLOW set which gets stored into a map
+// Computes the FOLLOW set following the algorithm
+// given in the CSE 570/670 website
 void Parser::computeFollow()
 {
     do
     {
         changed = false;
+
+        // Go through the productions of G
         for (auto p : productions)
         {
             std::string currProduction = p;
             char nonTerminal = currProduction[0];
             std::string rhs = currProduction.substr(3);
 
+            // Go through the characters in the right hand side of the production
+            // e.g. E -> T + F where T + F is the RHS
             for (size_t i = 0; i < rhs.length();)
             {
+                // Check if the current char in the RHS is a non-terminal
+                // and making sure we still have input to process on the RHS
                 if (util.isNonTerminal(rhs[i]) && i < rhs.length() - 1)
                 {
+                    // Retrieve a set in FIRST based the non-terminal
+                    // we get from the RHS of the production
                     std::set<char> temp = first[rhs[i + 1]];
+
+                    // If A -> αBβ and ε is in FIRST(β) then
+                    // add everything in FOLLOW(A) to FOLLOW(B)
                     if (util.hasEplison(temp))
                     {
+
                         std::set<char> nonTerminalFollowSet = follow[nonTerminal];
                         for (auto n : nonTerminalFollowSet)
                         {
@@ -173,6 +191,7 @@ void Parser::computeFollow()
                             }
                         }
                     }
+                    // Else, just add everything in FIRST(β) except ε to FOLLOW(B)
                     for (auto t : temp)
                     {
                         auto checkInsert = follow[rhs[i]].insert(t);
@@ -182,6 +201,8 @@ void Parser::computeFollow()
                         }
                     }
                 }
+                // If we reached the last character in the RHS
+                // then just add everything in FOLLOW(A) to FOLLOW(B)
                 else if (util.isNonTerminal(rhs[i]) && i == rhs.length() - 1)
                 {
                     std::set<char> temp = follow[nonTerminal];
@@ -198,6 +219,11 @@ void Parser::computeFollow()
             }
         }
     } while (changed);
+
+    std::set<char> endMarker;
+    endMarker.insert('$');
+
+    follow['S'] = endMarker;
 }
 
 void Parser::printFirst() const
@@ -206,10 +232,12 @@ void Parser::printFirst() const
     for (auto f : first)
     {
         std::cout << f.first << " -> ";
+        std::cout << "{ ";
         for (auto s : f.second)
         {
             std::cout << s << ' ';
         }
+        std::cout << "}";
         std::cout << '\n';
     }
 }
@@ -220,10 +248,12 @@ void Parser::printFollow() const
     for (auto f : follow)
     {
         std::cout << f.first << " -> ";
+        std::cout << "{ ";
         for (auto s : f.second)
         {
             std::cout << s << ' ';
         }
+        std::cout << "}";
         std::cout << '\n';
     }
 }
