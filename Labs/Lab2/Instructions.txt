@@ -1,7 +1,0 @@
-Run the program by entering:
-	
-	make grammer
-
-and then to execute the program, enter:
-
-	./grammer

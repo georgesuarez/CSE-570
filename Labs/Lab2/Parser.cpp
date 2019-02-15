@@ -62,6 +62,8 @@ void Parser::parse()
 
         std::string rhs = currProd.substr(3);
         size_t index = 0;
+
+        // If X -> ε is production, add ε to FIRST(X)
         while (index < rhs.length())
         {
             if (rhs[index] == EPLISON)
@@ -220,10 +222,8 @@ void Parser::computeFollow()
         }
     } while (changed);
 
-    std::set<char> endMarker;
-    endMarker.insert('$');
-
-    follow['S'] = endMarker;
+    // Add the $ symbol to FOLLOW(S)
+    follow['S'].insert('$');
 }
 
 void Parser::printFirst() const
@@ -260,7 +260,7 @@ void Parser::printFollow() const
 
 void Parser::printProductions() const
 {
-    std::cout << "The productions in G: " << '\n';
+    std::cout << "The productions in " << grammer << " are:" << '\n';
     for (auto p : productions)
     {
         std::cout << p << '\n';

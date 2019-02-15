@@ -28,13 +28,13 @@ State getInitialState()
 }
 
 // Checks if a given state is in its' accepting state
-// Returns a true if state == 3, otherwise false
+// Returns true if state == 3, otherwise false
 bool isFinalState(State state)
 {
     return (state == ACCEPTING_STATE) ? true : false;
 }
 
-// Determines what the transition code is given an character as input
+// Determines what the transition code is given an character
 int getTransition(char input)
 {
     if (input != 'a' && input != 'b')
