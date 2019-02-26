@@ -1,8 +1,9 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
 int regs[26];
 int base;
-int answer;
+double answer;
 int yylex();
 int yyerror(char *s);
 int yywrap();
@@ -10,13 +11,13 @@ int yywrap();
 
 %start list
 %union {
-  int a;
+  double a;
   char c;
-  float f;
 }
 %type <a> expr number DIGIT
 %type <c> LETTER
 %token DIGIT LETTER
+%token EXIT
 %left '|'
 %left '&'
 %left '+' '-'
@@ -32,7 +33,7 @@ list: /* empty */
     };
 
 stat: expr {
-        printf("%d\n", $1);
+        printf("%f\n", $1);
       }
     | LETTER '=' expr {
       regs[$1] = $3;
@@ -58,14 +59,6 @@ expr: '(' expr ')' {
         $$ = answer / $2;
         answer = $$;
       }
-    | expr '%' expr {
-        $$ = $1 % $3;
-        answer = $$;
-      }
-    | '%' expr {
-        $$ = answer % $2;
-        answer = $$;
-      }
     | expr '+' expr {
         $$ = $1 + $3;
         answer = $$;
@@ -77,28 +70,11 @@ expr: '(' expr ')' {
     | expr '-' expr {
         $$ = $1 - $3;
         answer = $$;
-        answer2 = $$;
       }
     | '-' expr {
         $$ = answer - $2;
         answer = $$;
     }
-    | expr '&' expr {
-        $$ = $1 & $3;
-        answer = $$;
-      }
-    | '&' expr {
-        $$ = answer & $2;
-        answer = $$;
-      }
-    | expr '|' expr {
-        $$ = $1 | $3;
-        answer = $$;
-      }
-    | '|' expr {
-        $$ = answer | $2;
-        answer = $$;
-      }
     | '-' expr %prec UMINUS {
         $$ = -$2;
         answer = $$;
@@ -107,15 +83,13 @@ expr: '(' expr ')' {
         $$ = regs[$1];
       }
     | number;
+    | EXIT {
+      return EXIT_SUCCESS;
+    }
 
 number: DIGIT {
           $$ = $1;
-          base = ($1 == 0) ? 8 : 10;
-        }
-      | number DIGIT {
-          $$ = base * $1 + $2;
-        };
-
+      };
 %%
 
 int main() {

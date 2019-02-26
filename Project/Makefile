@@ -15,4 +15,4 @@ lex.yy.c: calc.lex
 	$(LEX) calc.lex
 
 clean:
-	-rm -f *.o lex.yy.o *.tab.* calc *.output
+	-rm -f *.o lex.yy.o lex.yy.c *.tab.* calc *.output

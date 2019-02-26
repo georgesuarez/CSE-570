@@ -3,7 +3,7 @@
 #include "y.tab.h"
 
 int c;
-float f;
+double d;
 extern YYSTYPE yylval;
 %}
 
@@ -19,8 +19,8 @@ extern YYSTYPE yylval;
 }
 
 [0-9] {
-  c = yytext[0];
-  yylval.a = c - '0';
+  d = atof(yytext);
+  yylval.a = d - 0;
   return(DIGIT);
 }
 
@@ -30,6 +30,10 @@ extern YYSTYPE yylval;
 }
 
 [0-9]+\.[0-9]+ {
-  f = atof(yytext);
-  return(f);
+  d = atof(yytext);
+  return(DIGIT);
+}
+
+EXIT {
+  return EXIT;
 }
