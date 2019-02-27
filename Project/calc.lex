@@ -31,6 +31,7 @@ extern YYSTYPE yylval;
 
 [0-9]+\.[0-9]+ {
   d = atof(yytext);
+  yylval.a = d - 0;
   return(DIGIT);
 }
 
