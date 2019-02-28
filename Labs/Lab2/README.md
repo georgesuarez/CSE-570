@@ -12,18 +12,18 @@ then it parses the productions which gets stored into a set.
 ## Running the program:
 Compile the program by entering
 	
-	``` make main ```
+	`make main`
 
 and then to execute the program
 
-	``` ./main <filename> ```
+	`./main <filename>`
 
 ## Example:
-**Input**
+###Input:
 `./main g419`
 
-**Output**
-`The productions in g419 are:
+### Output:
+```The productions in g419 are:
 E->E+T
 E->T
 F->(E)
@@ -47,5 +47,4 @@ FOLLOW =
 E -> { ) + }
 F -> { ) * + }
 S -> { $ }
-T -> { ) * + }
-`
+T -> { ) * + } ```
