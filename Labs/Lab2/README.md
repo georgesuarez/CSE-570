@@ -23,7 +23,8 @@ and then to execute the program
 ```./main g419```
 
 ### Output:
-```The productions in g419 are:
+```
+The productions in g419 are:
 E->E+T
 E->T
 F->(E)
