@@ -19,7 +19,7 @@ and then to execute the program
 	`./main <filename>`
 
 ## Example:
-###Input:
+### Input:
 `./main g419`
 
 ### Output:
