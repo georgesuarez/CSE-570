@@ -24,5 +24,7 @@ The input to the DFA should be a string; in the course of processing this string
 ## Extra Credit:
 Extend Lab 1 to read a text input and accept every instance of text that satisfies DFA1 or DFA2, ignoring all other text. It should output the position of each string found, and which DFA it satisfies. Take DFA1 to be the one you wrote for the original lab, DFA2 is a regular expression of your choice, using the same alphabet
 
+## Running the program
+Simply run ``` make lab1 ``` which then do ```./lab1``` to execute the program.
 
 
