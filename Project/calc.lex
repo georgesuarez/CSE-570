@@ -35,6 +35,20 @@ extern YYSTYPE yylval;
   return(DIGIT);
 }
 
-EXIT {
-  return EXIT;
+QUIT {
+  return QUIT;
 }
+
+SIN {
+  return SIN;
+}
+
+COS {
+  return COS;
+}
+
+TAN {
+  return TAN;
+}
+
+

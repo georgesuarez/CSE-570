@@ -1,8 +1,9 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#define PI 3.14159265358979323846
 int regs[26];
-int base;
 double answer;
 int yylex();
 int yyerror(char *s);
@@ -17,7 +18,8 @@ int yywrap();
 %type <a> expr number DIGIT
 %type <c> LETTER
 %token DIGIT LETTER
-%token EXIT
+%token QUIT
+%token SIN COS TAN
 %left '|'
 %left '&'
 %left '+' '-'
@@ -83,8 +85,20 @@ expr: '(' expr ')' {
         $$ = regs[$1];
       }
     | number;
-    | EXIT {
+    | QUIT {
       return EXIT_SUCCESS;
+    }
+    | SIN expr {
+      $$ = sin($2 * PI / 180);
+      answer = $$;
+    }
+    | COS expr {
+      $$ = cos($2 * PI / 189);
+      answer = $$;
+    }
+    | TAN expr {
+      $$ = tan($2 * PI / 180);
+      answer = $$;
     }
 
 number: DIGIT {
@@ -93,8 +107,8 @@ number: DIGIT {
 %%
 
 int main() {
-  printf("Enter an expression: ");
-  return yyparse();
+  printf("Enter an expression:\n");
+  return yyparse();  
 }
 
 int yyerror(char *s) {
