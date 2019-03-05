@@ -11,12 +11,12 @@ int Item::getDotPos()
     return dotPos;
 }
 
-bool Item::operator==(const Item& other) const
+bool Item::operator==(const Item &other) const
 {
     return other.production == production;
 }
 
-bool Item::operator<(const Item& other) const
+bool Item::operator<(const Item &other) const
 {
-    return other.production > production;
+    return other.production > production || dotPos < other.dotPos;
 }

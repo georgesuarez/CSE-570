@@ -319,7 +319,7 @@ void Parser::findCanonicalSet()
                         changed = true;
                         ++id;
                     }
-               }
+                }
             }
         } while (changed);
     }
@@ -383,11 +383,13 @@ void Parser::printCanonicalSet() const
     for (auto c : canonicalSet)
     {
         auto temp = c.getClosure();
-        std::cout << "ID: " << c.getId() << '\n';
+        std::cout << "Item: " << c.getId() << '\n';
         std::cout << "Symbol: " << c.getSymbol() << '\n';
         for (auto t : temp)
         {
-            std::cout << "Production: [" << t.getDotPos() << "] = " << t.getProduction() << '\n';
+            std::string currProd = t.getProduction();
+            currProd.insert(currProd.begin() + t.getDotPos(), '.');
+            std::cout << "Production: [" << t.getDotPos() << "] = " << currProd << '\n';
         }
         std::cout << '\n';
     }
