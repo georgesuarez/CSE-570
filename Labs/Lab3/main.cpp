@@ -21,8 +21,11 @@ int main(int argc, char *argv[])
 
     parser->parse();
 
-    parser->printCanonicalSet();
+    //parser->printFirst();
 
+    //parser->printFollow();
+
+    parser->printCanonicalSet();
 
     delete parser;
 

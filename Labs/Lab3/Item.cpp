@@ -20,3 +20,10 @@ bool Item::operator<(const Item &other) const
 {
     return other.production > production || dotPos < other.dotPos;
 }
+
+Item &Item::operator=(const Item &other)
+{
+    production = other.production;
+    dotPos = other.dotPos;
+    return *this;
+}

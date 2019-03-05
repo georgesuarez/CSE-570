@@ -77,8 +77,8 @@ void Parser::parse()
         }
     }
 
-    computeFirst();
-    computeFollow();
+    //computeFirst();
+    //computeFollow();
     findCanonicalSet();
 }
 
@@ -292,6 +292,14 @@ std::set<Item> Parser::getGoto(std::set<Item> items, char symbol)
 void Parser::findCanonicalSet()
 {
     std::set<char> symbols;
+    std::string startProduction = "S->E";
+
+    auto firstItem = Item(startProduction, 3);
+    std::set<Item> tempItem;
+    tempItem.insert(firstItem);
+    auto firstClosure = closure(tempItem);
+    canonicalSet.insert(LRSet(firstClosure, 0, '\0'));
+
     for (auto p : productions)
     {
         auto currentItem = Item(p, 3);
@@ -299,7 +307,6 @@ void Parser::findCanonicalSet()
         tempItem.insert(currentItem);
         auto currentClosure = closure(tempItem);
 
-        canonicalSet.insert(LRSet(currentClosure, 0, '\0'));
         symbols = util.setUnion(terminals, nonTerminals);
 
         int id = 1;
