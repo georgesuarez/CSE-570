@@ -233,6 +233,8 @@ void Parser::computeFollow()
 std::set<Item> Parser::closure(std::set<Item> items)
 {
     std::set<Item> closure;
+
+    // Add evrery item to Closure(i)
     for (auto i : items)
     {
         closure.insert(i);
@@ -248,14 +250,17 @@ std::set<Item> Parser::closure(std::set<Item> items)
 
             char lookAhead = currProduction[dotPos];
 
+            // If A -> αBβ is in Closure(j)
             if (util.isNonTerminal(lookAhead))
             {
                 for (auto p : productions)
                 {
+                    // If B is a production by using a look ahead
                     if (p[0] == lookAhead)
                     {
                         Item temp(p, 3);
 
+                        // Add B to Closure(j)
                         auto checkInsert = closure.insert(temp);
                         if (checkInsert.second)
                         {
@@ -272,14 +277,16 @@ std::set<Item> Parser::closure(std::set<Item> items)
 
 std::set<Item> Parser::getGoto(std::set<Item> items, char symbol)
 {
-    // Empty set
+    // The empty set j
     std::set<Item> j;
+
     for (auto item : items)
     {
         std::string currProduction = item.getProduction();
         int dotPos = item.getDotPos();
 
         char lookAhead = currProduction[dotPos];
+
         if (symbol == lookAhead)
         {
             Item temp(currProduction, dotPos + 1);
@@ -292,8 +299,11 @@ std::set<Item> Parser::getGoto(std::set<Item> items, char symbol)
 void Parser::findCanonicalSet()
 {
     std::set<char> symbols;
+
     std::string startProduction = "S->E";
 
+    // Add the first production S->E to the canonical set to
+    // generate the correct item sets
     auto firstItem = Item(startProduction, 3);
     std::set<Item> tempItem;
     tempItem.insert(firstItem);
@@ -319,6 +329,8 @@ void Parser::findCanonicalSet()
                 {
                     auto temp = getGoto(item.getClosure(), symbol);
 
+                    // If GOTO(I, X) is not empty && not in the canonicalSet
+                    // then add the GOTO(I, X) to the canonicalSet
                     if (!temp.empty() && !isIn(canonicalSet, temp))
                     {
                         LRSet lrset(temp, id, symbol);
@@ -332,6 +344,7 @@ void Parser::findCanonicalSet()
     }
 }
 
+// Checks if a set of items is in the LRSet
 bool Parser::isIn(std::set<LRSet> lrset, std::set<Item> items)
 {
     for (auto curr : lrset)
