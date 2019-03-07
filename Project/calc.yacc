@@ -19,7 +19,7 @@ int yywrap();
 %type <c> LETTER
 %token DIGIT LETTER
 %token QUIT
-%token SIN COS TAN
+%token SIN COS TAN SQRT EXP LOG LOG2
 %left '|'
 %left '&'
 %left '+' '-'
@@ -98,6 +98,22 @@ expr: '(' expr ')' {
     }
     | TAN expr {
       $$ = tan($2 * PI / 180);
+      answer = $$;
+    }
+    | SQRT expr {
+      $$ = sqrt($2);
+      answer = $$;
+    }
+    | EXP expr {
+      $$ = exp($2);
+      answer = $$;
+    }
+    | LOG expr {
+      $$ = log($2);
+      answer = $$;
+    }
+    | LOG2 expr {
+      $$ = log2($2);
       answer = $$;
     }
 

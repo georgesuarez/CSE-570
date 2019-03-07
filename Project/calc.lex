@@ -51,4 +51,20 @@ TAN {
   return TAN;
 }
 
+SQRT {
+  return SQRT;
+}
+
+EXP {
+  return EXP;
+}
+
+LOG {
+  return LOG;
+}
+
+LOG2 {
+  return LOG2;
+}
+
 
