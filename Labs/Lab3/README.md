@@ -21,52 +21,74 @@ then run the program by doing
 ### Output
 
 ```
-ID: 0
+Item: 0
 Symbol: 
-Production: [3] = E->E+T
-Production: [3] = E->T
-Production: [3] = F->(E)
-Production: [3] = F->i
-Production: [3] = T->F
-Production: [3] = T->T*F
+Production: [3] = E->.E+T
+Production: [3] = E->.T
+Production: [3] = F->.(E)
+Production: [3] = F->.i
+Production: [3] = S->.E
+Production: [3] = T->.F
+Production: [3] = T->.T*F
 
-ID: 1
+Item: 1
+Symbol: (
+Production: [3] = E->.E+T
+Production: [3] = E->.T
+Production: [3] = F->.(E)
+Production: [3] = F->.i
+Production: [3] = T->.F
+Production: [3] = T->.T*F
+Production: [4] = F->(.E)
+
+Item: 2
 Symbol: E
-Production: [4] = E->E+T
+Production: [4] = E->E.+T
+Production: [4] = S->E.
 
-ID: 2
+Item: 3
 Symbol: F
-Production: [4] = T->F
+Production: [4] = T->F.
 
-ID: 3
+Item: 4
 Symbol: T
-Production: [4] = E->T
-Production: [4] = T->T*F
+Production: [4] = E->T.
+Production: [4] = T->T.*F
 
-ID: 4
+Item: 5
 Symbol: i
-Production: [4] = F->i
+Production: [4] = F->i.
 
-ID: 5
+Item: 6
+Symbol: E
+Production: [4] = E->E.+T
+Production: [5] = F->(E.)
+
+Item: 7
 Symbol: +
-Production: [5] = E->E+T
-Production: [3] = F->(E)
-Production: [3] = F->i
-Production: [3] = T->F
-Production: [3] = T->T*F
+Production: [3] = F->.(E)
+Production: [3] = F->.i
+Production: [3] = T->.F
+Production: [3] = T->.T*F
+Production: [5] = E->E+.T
 
-ID: 6
+Item: 8
 Symbol: *
-Production: [3] = F->(E)
-Production: [3] = F->i
-Production: [5] = T->T*F
+Production: [3] = F->.(E)
+Production: [3] = F->.i
+Production: [5] = T->T*.F
 
-ID: 7
+Item: 9
+Symbol: )
+Production: [6] = F->(E).
+
+Item: 10
 Symbol: T
-Production: [6] = E->E+T
-Production: [4] = T->T*F
+Production: [4] = T->T.*F
+Production: [6] = E->E+T.
 
-ID: 8
+Item: 11
 Symbol: F
-Production: [6] = T->T*F
+Production: [6] = T->T*F.
+
 ```
